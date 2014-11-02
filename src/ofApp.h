@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOpenCV.h"
+#include "ofxKinect.h"
 
 class ofApp : public ofBaseApp{
 
@@ -18,7 +20,9 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		void exit();
 
     private:
         ofxKinect kinect;
+        int angle;
 };

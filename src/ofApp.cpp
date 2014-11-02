@@ -27,20 +27,20 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     kinect.update();
-
-    if (kinect.isFrameNew()) {
-
-    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    kinect.drawDepth(0, 0, kinect.width, kinect.height);
+    kinect.draw(kinect.width+10, 0, kinect.width, kinect.height);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    // quit on esc, Q or q
+    if (key == 0x1B || key == 0x51 || key == 0x71) {
+        exit();
+    }
 }
 
 //--------------------------------------------------------------
@@ -81,4 +81,10 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
+}
+
+//--------------------------------------------------------------
+void ofApp::exit() {
+	kinect.setCameraTiltAngle(0); // zero the tilt on exit
+	kinect.close();
 }
