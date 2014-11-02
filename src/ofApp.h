@@ -4,6 +4,8 @@
 #include "ofxOpenCV.h"
 #include "ofxKinect.h"
 
+#include "keycode.h"
+
 class ofApp : public ofBaseApp{
 
 	public:
