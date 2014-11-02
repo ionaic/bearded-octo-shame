@@ -2,12 +2,35 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetLogLevel(OF_LOG_VERBOSE);
 
+    // enable depth->video image calibration
+    kinect.setRegistration(true);
+
+    kinect.init(); // init(true) shows infrared instead of RGB, init(false,false) disables video image (faster fps)
+
+    kinect.open(); // opens first available kinect
+
+    // print the intrinsic IR sensor values
+	if(kinect.isConnected()) {
+		ofLogNotice() << "sensor-emitter dist: " << kinect.getSensorEmitterDistance() << "cm";
+		ofLogNotice() << "sensor-camera dist:  " << kinect.getSensorCameraDistance() << "cm";
+		ofLogNotice() << "zero plane pixel size: " << kinect.getZeroPlanePixelSize() << "mm";
+		ofLogNotice() << "zero plane dist: " << kinect.getZeroPlaneDistance() << "mm";
+	}
+
+	// zero the tilt on startup
+	angle = 0;
+	kinect.setCameraTiltAngle(angle);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    kinect.update();
 
+    if (kinect.isFrameNew()) {
+
+    }
 }
 
 //--------------------------------------------------------------
@@ -56,6 +79,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
