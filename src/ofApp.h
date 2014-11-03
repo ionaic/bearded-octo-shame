@@ -2,13 +2,14 @@
 
 // OpenFrameworks includes
 #include "ofMain.h"
-#include "ofxOpenCV.h"
+//#include "ofxOpenCV.h"
 #include "ofxKinect.h"
 
 // OpenNI includes
 //#include <OpenNI.h>
 
 // local includes
+#include "particleChain.h"
 #include "keycode.h"
 
 class ofApp : public ofBaseApp{
@@ -32,4 +33,6 @@ class ofApp : public ofBaseApp{
     private:
         ofxKinect kinect;
         int angle;
+
+        std::vector<ParticleChain> particleSystem;
 };
