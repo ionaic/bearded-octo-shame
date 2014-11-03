@@ -4,11 +4,8 @@
 //#include "ofxOpenCV.h"
 #include "ofxKinect.h"
 
-<<<<<<< HEAD
 #include "particleChain.h"
-=======
 #include "keycode.h"
->>>>>>> e24ae659ce14923d96d772641cf777c7c68f2160
 
 class ofApp : public ofBaseApp{
 
