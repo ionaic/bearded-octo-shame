@@ -5,7 +5,7 @@
 #include "ofxKinect.h"
 
 #include "particleChain.h"
-#include "keycode.h"
+#include "ofxkeycode.h"
 
 class ofApp : public ofBaseApp{
 

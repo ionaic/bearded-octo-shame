@@ -2,7 +2,7 @@
 #include "particle.h"
 
 #define STARTING_RADIUS_SIZE 40
-#define ALPHA_STEP_SIZE .6
+#define ALPHA_STEP_SIZE .93
 #define RADIUS_REDUCTION .93
 
 
@@ -14,14 +14,15 @@ Particle::Particle(ofVec2f loc){
 	location = loc;
 	frameNumber = 0;
 	currentSize = STARTING_RADIUS_SIZE;
-	currentAlpha = 1.0;
+	currentAlpha = 255;
 }
 
 void Particle::draw(ofVec3f color){
 
 //	std:: cout << "Drawing a particle at " << location.x << " " << location.y << std::endl;
+	//std::cout << "color: " << color.x << " " << color.y << " " << color.z << std::endl;
 //	std::cout << "currentAlpha is " << currentAlpha << std::endl;
-	ofSetColor(color.x, color.y, color.z, 10);
+	ofSetColor(color.x, color.y, color.z, currentAlpha);
 
 	ofCircle(location, currentSize);
 }

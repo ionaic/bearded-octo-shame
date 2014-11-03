@@ -40,7 +40,7 @@ void ofApp::draw(){
     kinect.draw(kinect.width+10, 0, kinect.width, kinect.height);
 
     // Update each particle (within each chain)
-    std::cout << "Drawing all particles" << std::endl;
+    //std::cout << "Drawing all particles" << std::endl;
     for(unsigned int p = 0; p < particleSystem.size(); p++){
     	particleSystem[p].draw();
     }
@@ -62,10 +62,13 @@ void ofApp::keyReleased(int key){
 void ofApp::mouseMoved(int x, int y ){
 
 	//FOR TESTING
-	if(particleSystem.size() != 0){
-		particleSystem[0].addParticle(ofVec2f(x,y));
-		std::cout << "Adding particle" << std::endl;
-	}
+    for(int i = 0; i < 10; i++){
+        if(particleSystem.size() >= i+1){
+            particleSystem[0].addParticle(ofVec2f(x+(i*40),y+(i*40)));
+        }
+        
+    }
+	
 }
 
 //--------------------------------------------------------------
@@ -77,13 +80,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 
 	//FOR TESTING
-	particleSystem.push_back(ParticleChain
-    									(ofVec3f(
-    										ofRandom(0,255),
-    										ofRandom(0,255),
-    										ofRandom(0,255))
-    									)
-    							);
+
+    for(int i = 0; i < 10; i++){
+        ofVec3f color = ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
+        particleSystem.push_back(ParticleChain(color));
+    }
+	
 	std::cout << "Adding partcle chain" << std::endl;
 }
 

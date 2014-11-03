@@ -1,4 +1,4 @@
-enum KeyCode {
+enum ofxKeyCode {
     keycode_Esc = 0x1B,
     keycode_Space = 0x20,
     keycode_Zero = 0x30,

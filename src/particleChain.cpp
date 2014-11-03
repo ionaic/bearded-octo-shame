@@ -18,7 +18,7 @@ void ParticleChain::update(){
 	bool to_delete = false;
 	for(list<Particle>::iterator p = particles.begin(); p != particles.end(); ){
 		//FOR TESTING
-		std::cout << "Updating Particle: " << std::endl;
+//		std::cout << "Updating Particle: " << std::endl;
 
 
 		to_delete = p->update();
@@ -39,10 +39,11 @@ void ParticleChain::update(){
 }
 
 void ParticleChain::draw(){
-	std::cout << "Num particles: " << particles.size() << endl;
+//	std::cout << "Num particles: " << particles.size() << endl;
 
 	for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++){
-		std::cout << "    draw a particle:" << std::endl;
+//		std::cout << "    draw a particle:" << std::endl;
+		std::cout << "chain color: " << color.x << " " << color.y << " " << color.z << std::endl;
 		p->draw(color);
 	}
 }
