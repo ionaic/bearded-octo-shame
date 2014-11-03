@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetLogLevel(OF_LOG_VERBOSE);
+    //ofSetLogLevel(OF_LOG_VERBOSE);
 
     // enable depth->video image calibration
     kinect.setRegistration(true);
@@ -48,8 +48,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    // quit on esc, Q or q
-    if (key == 0x1B || key == 0x51 || key == 0x71) {
+    if (key == keycode_Esc || key == keycode_Q || key == keycode_q) {
         exit();
     }
 }
