@@ -1,9 +1,14 @@
 #pragma once
 
+// OpenFrameworks includes
 #include "ofMain.h"
 #include "ofxOpenCV.h"
 #include "ofxKinect.h"
 
+// OpenNI includes
+//#include <OpenNI.h>
+
+// local includes
 #include "keycode.h"
 
 class ofApp : public ofBaseApp{
