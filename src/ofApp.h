@@ -1,8 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxOpenCV.h"
+//#include "ofxOpenCV.h"
 #include "ofxKinect.h"
+
+#include "particleChain.h"
 
 class ofApp : public ofBaseApp{
 
@@ -25,4 +27,6 @@ class ofApp : public ofBaseApp{
     private:
         ofxKinect kinect;
         int angle;
+
+        std::vector<ParticleChain> particleSystem;
 };
