@@ -31,6 +31,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		void exit();
 
+        void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data);
+
     private:
         ofxKinect kinect;
         int angle;

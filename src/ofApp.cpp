@@ -33,12 +33,22 @@ void ofApp::setup(){
 	kinect.setCameraTiltAngle(angle);
 }
 
+struct cb_args {
+
+};
+
+void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data) {
+    // do things once the joints are tracked
+    SkeletonJointList joints = skeltrack_skeleton_track_joints_finish(skeleton, , );
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
     kinect.update();
 
     if (kinect.isFrameNew()) {
-        
+        ofPixels *pix = kinect.getDepthPixelsRef();
+        skeltrack_skeleton_track_joints(skeleton, pix->getPixels(), pix->getWidth(), pix->getHeight(), NULL, on_track_joints, cb_args);
     }
 
     // Draw all of the particles
