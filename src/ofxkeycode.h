@@ -1,3 +1,6 @@
+#ifndef _OFX_KEYCODE_H_
+#define _OFX_KEYCODE_H_
+
 enum ofxKeyCode {
     keycode_Esc = 0x1B,
     keycode_Space = 0x20,
@@ -64,3 +67,5 @@ enum ofxKeyCode {
     keycode_y = 0x79,
     keycode_z = 0x7A
 };
+
+#endif
