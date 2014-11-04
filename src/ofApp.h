@@ -36,4 +36,6 @@ class ofApp : public ofBaseApp{
         int angle;
 
         std::vector<ParticleChain> particleSystem;
+
+        SkeltrackSkeleton *skeleton;
 };

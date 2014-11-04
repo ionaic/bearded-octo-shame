@@ -4,19 +4,28 @@
 void ofApp::setup(){
     //ofSetLogLevel(OF_LOG_VERBOSE);
 
+    // Skeltrack Skeleton
+    skeleton = skeltrack_skeleton_new();
+
     // enable depth->video image calibration
     kinect.setRegistration(true);
 
-    kinect.init(); // init(true) shows infrared instead of RGB, init(false,false) disables video image (faster fps)
+    // init(true) shows infrared instead of RGB, init(false,false) disables
+    // video image (faster fps)
+    kinect.init(); 
 
     kinect.open(); // opens first available kinect
 
     // print the intrinsic IR sensor values
 	if(kinect.isConnected()) {
-		ofLogNotice() << "sensor-emitter dist: " << kinect.getSensorEmitterDistance() << "cm";
-		ofLogNotice() << "sensor-camera dist:  " << kinect.getSensorCameraDistance() << "cm";
-		ofLogNotice() << "zero plane pixel size: " << kinect.getZeroPlanePixelSize() << "mm";
-		ofLogNotice() << "zero plane dist: " << kinect.getZeroPlaneDistance() << "mm";
+		ofLogNotice() << "sensor-emitter dist: " 
+            << kinect.getSensorEmitterDistance() << "cm";
+		ofLogNotice() << "sensor-camera dist:  " 
+            << kinect.getSensorCameraDistance() << "cm";
+		ofLogNotice() << "zero plane pixel size: " 
+            << kinect.getZeroPlanePixelSize() << "mm";
+		ofLogNotice() << "zero plane dist: " 
+            << kinect.getZeroPlaneDistance() << "mm";
 	}
 
 	// zero the tilt on startup
@@ -27,6 +36,10 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     kinect.update();
+
+    if (kinect.isFrameNew()) {
+        
+    }
 
     // Draw all of the particles
     for(unsigned int p = 0; p < particleSystem.size(); p++){
@@ -82,7 +95,8 @@ void ofApp::mousePressed(int x, int y, int button){
 	//FOR TESTING
 
     for(int i = 0; i < 10; i++){
-        ofVec3f color = ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
+        ofVec3f color =
+            ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
         particleSystem.push_back(ParticleChain(color));
     }
 	
