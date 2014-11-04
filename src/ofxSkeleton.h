@@ -32,6 +32,9 @@ class ofxSkeleton {
         // set skeleton joint positions from joint list
         void skeletonFromJointList(const SkeltrackJointList joints);
 
+        void update();
+        void draw();
+
         // nodes of the skeleton
         ofNode head,
                leftShoulder,

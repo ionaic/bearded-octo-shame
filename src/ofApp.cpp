@@ -53,6 +53,8 @@ void ofApp::update(){
         // TODO: use the ofNodes in this->skeleton to put particle trackers at positions
     }
 
+    skeleton.update();
+
     // Draw all of the particles
     for(unsigned int p = 0; p < particleSystem.size(); p++){
     	particleSystem[p].update();
@@ -63,6 +65,7 @@ void ofApp::update(){
 void ofApp::draw(){
     kinect.drawDepth(0, 0, kinect.width, kinect.height);
     kinect.draw(kinect.width+10, 0, kinect.width, kinect.height);
+    skeleton.draw();
 
     // Update each particle (within each chain)
     //std::cout << "Drawing all particles" << std::endl;

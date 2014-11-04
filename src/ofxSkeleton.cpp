@@ -94,3 +94,24 @@ void ofxSkeleton::skeletonFromJointList(const SkeltrackJointList joints) {
                 skeltrack_joint_list_get_joint(joints, SKELTRACK_JOINT_ID_RIGHT_HAND)
                 ));
 }
+
+
+void ofxSkeleton::update(){
+    head_pc.update();
+    leftShoulder_pc.update();
+    rightShoulder_pc.update();
+    leftElbow_pc.update();
+    rightElbow_pc.update();
+    leftHand_pc.update();
+    rightHand_pc.update();
+}
+
+void ofxSkeleton::draw(){
+    head_pc.draw();
+    leftShoulder_pc.draw();
+    rightShoulder_pc.draw();
+    leftElbow_pc.draw();
+    rightElbow_pc.draw();
+    leftHand_pc.draw();
+    rightHand_pc.draw();
+}
