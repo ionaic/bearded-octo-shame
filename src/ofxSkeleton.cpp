@@ -1,5 +1,4 @@
 #include "ofxSkeleton.h"
-#include <skeltrack.h>
 
 void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data) {
     // retrieve the tracked joints

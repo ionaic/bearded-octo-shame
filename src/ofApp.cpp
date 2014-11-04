@@ -1,5 +1,4 @@
 #include "ofApp.h"
-#include <skeltrack.h>
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -50,6 +49,8 @@ void ofApp::update(){
                 conv_image.getShortPixelsRef().getPixels(),
                 conv_image.getWidth(), conv_image.getHeight(), NULL,
                 on_track_joints, &cb_args);
+
+        // TODO: use the ofNodes in this->skeleton to put particle trackers at positions
     }
 
     // Draw all of the particles
@@ -139,4 +140,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::exit() {
 	kinect.setCameraTiltAngle(0); // zero the tilt on exit
 	kinect.close();
+
+    g_object_unref(st_skel);
 }

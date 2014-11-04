@@ -1,3 +1,6 @@
+#ifndef _OFX_SKELETON_H_
+#define _OFX_SKELETON_H_
+
 #include "ofMain.h"
 
 // SkelTrack includes
@@ -35,3 +38,5 @@ class ofxSkeleton {
                leftHand,
                rightHand;
 };
+
+#endif
