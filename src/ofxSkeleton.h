@@ -3,8 +3,10 @@
 // SkelTrack includes
 #include <gfreenect.h>
 #include <skeltrack.h>
+#include "particleChain.h"
 
 class ofxSkeleton;
+class ParticleChain;
 
 // any arguments that need to be passed to the callback function
 struct ofxSkeleton_CBArgs { 
@@ -14,6 +16,7 @@ struct ofxSkeleton_CBArgs {
 
 class ofxSkeleton {
     public:
+    	ofxSkeleton();
         // get the screen space coordinates of the skeleton joint
         static ofVec2f getSkelJointScreenPosition(const SkeltrackJoint *joint) {
             return ofVec2f(joint->screen_x, joint->screen_y);
@@ -34,4 +37,13 @@ class ofxSkeleton {
                rightElbow,
                leftHand,
                rightHand;
+
+        ParticleChain head_pc,
+		              leftShoulder_pc,
+		              rightShoulder_pc,
+		              leftElbow_pc,
+		              rightElbow_pc,
+		              leftHand_pc,
+		              rightHand_pc;
+
 };
