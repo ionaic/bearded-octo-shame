@@ -4,6 +4,9 @@
 void ofApp::setup(){
     //ofSetLogLevel(OF_LOG_VERBOSE);
 
+    threshMin = 70;
+    threshMax = 230;
+
     // Skeltrack Skeleton
     st_skel = skeltrack_skeleton_new();
 
@@ -28,7 +31,10 @@ void ofApp::setup(){
             << kinect.getZeroPlaneDistance() << "mm";
 	}
 
-    conv_image.allocate(kinect.width, kinect.height);
+    conv_image.allocate(kinect.width / 2, kinect.height / 2);
+    min_image.allocate(kinect.width / 2, kinect.height / 2);
+    max_image.allocate(kinect.width / 2, kinect.height / 2);
+    simg.allocate(kinect.width / 2, kinect.height / 2);
 
 	// zero the tilt on startup
 	angle = 0;
@@ -43,14 +49,26 @@ void ofApp::update(){
     kinect.update();
 
     if (kinect.isFrameNew()) {
-        conv_image.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
+        ofxCvGrayscaleImage tmp;
+        tmp.allocate(kinect.width, kinect.height);
+        tmp.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
+        std::cout << "width: " << kinect.width << "; height: " << kinect.height << std::endl;
+        tmp.resize(kinect.width / 2, kinect.height / 2);
+        min_image = tmp;
+        max_image = tmp;
+        min_image.threshold(threshMin);
+        max_image.threshold(threshMax, true);
+        cvAnd(min_image.getCvImage(), max_image.getCvImage(), conv_image.getCvImage(), NULL);
 
+        simg.setFromPixels(conv_image.getPixels(), conv_image.getWidth(), conv_image.getHeight());
+        std::cout << "width: " << conv_image.getWidth() << "; height: " << conv_image.getHeight() << std::endl;
+
+
+        std::cout << "sending out asynch track call" << std::endl;
         skeltrack_skeleton_track_joints(st_skel,
-                conv_image.getShortPixelsRef().getPixels(),
-                conv_image.getWidth(), conv_image.getHeight(), NULL,
+                simg.getShortPixelsRef().getPixels(),
+                simg.getWidth(), simg.getHeight(), NULL,
                 on_track_joints, &cb_args);
-
-        // TODO: use the ofNodes in this->skeleton to put particle trackers at positions
     }
 
     skeleton.update();
@@ -63,8 +81,12 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    kinect.drawDepth(0, 0, kinect.width, kinect.height);
-    kinect.draw(kinect.width+10, 0, kinect.width, kinect.height);
+    //kinect.drawDepth(0, 0, kinect.width, kinect.height);
+    //kinect.draw(kinect.width+10, 0, kinect.width, kinect.height);
+    conv_image.draw(0, 0);
+    simg.draw(conv_image.getWidth() + 10, 0);
+    min_image.draw(0, conv_image.getHeight() + 10);
+    max_image.draw(min_image.getWidth() + 10, simg.getHeight() + 10);
     skeleton.draw();
 
     // Update each particle (within each chain)
@@ -90,12 +112,12 @@ void ofApp::keyReleased(int key){
 void ofApp::mouseMoved(int x, int y ){
 
 	//FOR TESTING
-    for(int i = 0; i < 10; i++){
-        if(particleSystem.size() >= i+1){
-            particleSystem[i].addParticle(ofVec2f(x+(i*40),y+(i*40)));
-        }
-        
-    }
+    //for(int i = 0; i < 10; i++){
+    //    if(particleSystem.size() >= i+1){
+    //        particleSystem[i].addParticle(ofVec2f(x+(i*40),y+(i*40)));
+    //    }
+    //    
+    //}
 	
 }
 
@@ -109,12 +131,12 @@ void ofApp::mousePressed(int x, int y, int button){
 
 	//FOR TESTING
 
-    for(int i = 0; i < 10; i++){
-        ofVec3f color =
-            ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
-        //std::cout << "color for chain: " << color.x << " " << color.y << " " << color.z << std::endl;
-        particleSystem.push_back(ParticleChain(color));
-    }
+    //for(int i = 0; i < 10; i++){
+    //    ofVec3f color =
+    //        ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
+    //    //std::cout << "color for chain: " << color.x << " " << color.y << " " << color.z << std::endl;
+    //    particleSystem.push_back(ParticleChain(color));
+    //}
 	
 	//std::cout << "Adding partcle chain" << std::endl;
 }

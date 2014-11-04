@@ -25,6 +25,7 @@ ofxSkeleton::ofxSkeleton(){
 }
 
 void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data) {
+    std::cout << "on_track_joints" << std::endl;
     // retrieve the tracked joints
     GError *err;
     SkeltrackJointList joints =
@@ -58,6 +59,8 @@ void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data) {
     
     loc = ((ofxSkeleton_CBArgs*)user_data)->skeleton->rightHand.getPosition();
     skel->rightHand_pc.addParticle(ofVec2f(loc.x, loc.y));
+
+    std::cout << skel->head.getPosition() << std::endl;
 
 
     // free the joint list

@@ -38,10 +38,15 @@ class ofApp : public ofBaseApp{
         ofxKinect kinect;
         int angle;
 
+        int threshMin, threshMax;
+
         std::vector<ParticleChain> particleSystem;
 
         // intermediary image for reading out depth data
-        ofxCvShortImage conv_image;
+        ofxCvGrayscaleImage conv_image;
+        ofxCvGrayscaleImage min_image;
+        ofxCvGrayscaleImage max_image;
+        ofxCvShortImage simg;
 
         SkeltrackSkeleton *st_skel;
         ofxSkeleton skeleton;
