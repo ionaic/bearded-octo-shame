@@ -2,11 +2,12 @@
 
 // OpenFrameworks includes
 #include "ofMain.h"
-//#include "ofxOpenCV.h"
+#include "ofxOpenCv.h"
 #include "ofxKinect.h"
 
-// OpenNI includes
-//#include <OpenNI.h>
+// SkelTrack includes
+#include <gfreenect.h>
+#include <skeltrack.h>
 
 // local includes
 #include "particleChain.h"

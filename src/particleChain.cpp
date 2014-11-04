@@ -43,7 +43,7 @@ void ParticleChain::draw(){
 
 	for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++){
 //		std::cout << "    draw a particle:" << std::endl;
-		std::cout << "chain color: " << color.x << " " << color.y << " " << color.z << std::endl;
+		//std::cout << "chain color: " << color.x << " " << color.y << " " << color.z << std::endl;
 		p->draw(color);
 	}
 }

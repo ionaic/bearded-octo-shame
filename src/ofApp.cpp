@@ -86,7 +86,7 @@ void ofApp::mousePressed(int x, int y, int button){
         particleSystem.push_back(ParticleChain(color));
     }
 	
-	std::cout << "Adding partcle chain" << std::endl;
+	//std::cout << "Adding partcle chain" << std::endl;
 }
 
 //--------------------------------------------------------------
