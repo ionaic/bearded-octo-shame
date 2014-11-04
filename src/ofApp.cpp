@@ -64,7 +64,7 @@ void ofApp::mouseMoved(int x, int y ){
 	//FOR TESTING
     for(int i = 0; i < 10; i++){
         if(particleSystem.size() >= i+1){
-            particleSystem[0].addParticle(ofVec2f(x+(i*40),y+(i*40)));
+            particleSystem[i].addParticle(ofVec2f(x+(i*40),y+(i*40)));
         }
         
     }
@@ -83,6 +83,7 @@ void ofApp::mousePressed(int x, int y, int button){
 
     for(int i = 0; i < 10; i++){
         ofVec3f color = ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
+        //std::cout << "color for chain: " << color.x << " " << color.y << " " << color.z << std::endl;
         particleSystem.push_back(ParticleChain(color));
     }
 	

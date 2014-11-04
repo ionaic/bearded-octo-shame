@@ -7,6 +7,7 @@ ParticleChain::ParticleChain(){
 
 ParticleChain::ParticleChain(ofVec3f color){
 	this->color = color;
+	//std::cout << "color of chain: " << this->color.x << " " << this->color.y << " " << this->color.z << std::endl;
 }
 
 void ParticleChain::addParticle(ofVec2f pos){
@@ -41,9 +42,10 @@ void ParticleChain::update(){
 void ParticleChain::draw(){
 //	std::cout << "Num particles: " << particles.size() << endl;
 
+	//std::cout << "curr chain color: " << color.x << " " << color.y << " " << color.z << std::endl;
 	for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++){
-//		std::cout << "    draw a particle:" << std::endl;
-		//std::cout << "chain color: " << color.x << " " << color.y << " " << color.z << std::endl;
+//		std::cout << "    draw a particle:" << std::endl;		
 		p->draw(color);
 	}
+
 }
