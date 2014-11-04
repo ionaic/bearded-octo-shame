@@ -1,11 +1,12 @@
 #include "ofApp.h"
+#include <skeltrack.h>
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     //ofSetLogLevel(OF_LOG_VERBOSE);
 
     // Skeltrack Skeleton
-    skeleton = skeltrack_skeleton_new();
+    st_skel = skeltrack_skeleton_new();
 
     // enable depth->video image calibration
     kinect.setRegistration(true);
@@ -28,18 +29,14 @@ void ofApp::setup(){
             << kinect.getZeroPlaneDistance() << "mm";
 	}
 
+    conv_image.allocate(kinect.width, kinect.height);
+
 	// zero the tilt on startup
 	angle = 0;
 	kinect.setCameraTiltAngle(angle);
-}
 
-struct cb_args {
-
-};
-
-void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data) {
-    // do things once the joints are tracked
-    SkeletonJointList joints = skeltrack_skeleton_track_joints_finish(skeleton, , );
+    cb_args.skeleton = &skeleton;
+    cb_args.st_skel = st_skel;
 }
 
 //--------------------------------------------------------------
@@ -47,8 +44,12 @@ void ofApp::update(){
     kinect.update();
 
     if (kinect.isFrameNew()) {
-        ofPixels *pix = kinect.getDepthPixelsRef();
-        skeltrack_skeleton_track_joints(skeleton, pix->getPixels(), pix->getWidth(), pix->getHeight(), NULL, on_track_joints, cb_args);
+        conv_image.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
+
+        skeltrack_skeleton_track_joints(st_skel,
+                conv_image.getShortPixelsRef().getPixels(),
+                conv_image.getWidth(), conv_image.getHeight(), NULL,
+                on_track_joints, &cb_args);
     }
 
     // Draw all of the particles
@@ -87,7 +88,7 @@ void ofApp::mouseMoved(int x, int y ){
 	//FOR TESTING
     for(int i = 0; i < 10; i++){
         if(particleSystem.size() >= i+1){
-            particleSystem[0].addParticle(ofVec2f(x+(i*40),y+(i*40)));
+            particleSystem[i].addParticle(ofVec2f(x+(i*40),y+(i*40)));
         }
         
     }
@@ -107,6 +108,7 @@ void ofApp::mousePressed(int x, int y, int button){
     for(int i = 0; i < 10; i++){
         ofVec3f color =
             ofVec3f(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
+        //std::cout << "color for chain: " << color.x << " " << color.y << " " << color.z << std::endl;
         particleSystem.push_back(ParticleChain(color));
     }
 	

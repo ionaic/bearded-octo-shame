@@ -22,9 +22,20 @@ void Particle::draw(ofVec3f color){
 //	std:: cout << "Drawing a particle at " << location.x << " " << location.y << std::endl;
 	//std::cout << "color: " << color.x << " " << color.y << " " << color.z << std::endl;
 //	std::cout << "currentAlpha is " << currentAlpha << std::endl;
-	ofSetColor(color.x, color.y, color.z, currentAlpha);
 
+
+	//Store current color to restore it afterwards
+	float currentColor[4];
+	//std::cout << "Current color: " << currentColor[0] << " " << currentColor[1] << " " << currentColor[2] << " " << currentColor[3] << std::endl;
+	glGetFloatv(GL_CURRENT_COLOR,currentColor);
+
+	//Draw circle
+	//std::cout << "particle color: " << color.x << " " << color.y << " " << color.z << std::endl;
+	ofSetColor(color.x, color.y, color.z, currentAlpha);
 	ofCircle(location, currentSize);
+
+	//Restore Previous Color
+	ofSetColor(currentColor[0], currentColor[1], currentColor[2], currentColor[3]);
 }
 
 bool Particle::update(){
