@@ -9,8 +9,6 @@
 #include "particleChain.h"
 #include "ofxkeycode.h"
 
-void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data);
-
 class ofApp : public ofBaseApp{
 
 	public:
@@ -42,9 +40,4 @@ class ofApp : public ofBaseApp{
         ofxCvGrayscaleImage min_image;
         ofxCvGrayscaleImage max_image;
         ofxCvShortImage simg;
-
-        SkeltrackSkeleton *st_skel;
-        ofxSkeleton skeleton;
-
-        ofxSkeleton_CBArgs cb_args;
 };

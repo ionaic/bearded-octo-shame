@@ -31,3 +31,9 @@
 *.cbp
 *.workspace
 *.depend
+obj/
+*.sln
+*.vcxproj
+*.filters
+*.sdf
+*.opensdf

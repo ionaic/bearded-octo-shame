@@ -6,18 +6,6 @@ void ofApp::setup(){
 
     // start the kinect library
     kinect.start();
-
-    conv_image.allocate(kinect.width / 2, kinect.height / 2);
-    min_image.allocate(kinect.width / 2, kinect.height / 2);
-    max_image.allocate(kinect.width / 2, kinect.height / 2);
-    simg.allocate(kinect.width / 2, kinect.height / 2);
-
-	// zero the tilt on startup
-	angle = 0;
-	kinect.setCameraTiltAngle(angle);
-
-    cb_args.skeleton = &skeleton;
-    cb_args.st_skel = st_skel;
 }
 
 //--------------------------------------------------------------
@@ -25,7 +13,7 @@ void ofApp::update(){
     kinect.update();
 
     if (kinect.isNewSkeleton()) {
-        for (int i = 0; i < kinec.getSkeletons().size(); ++i) {
+        for (int i = 0; i < kinect.getSkeletons().size(); ++i) {
             // do things with the skeletons
         }
     }
@@ -39,7 +27,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     kinect.draw(0, 0);
-    kinect.drawDepth(0, kinect.getHeight());
+    kinect.drawDepth(0, 480);
 
     // Update each particle (within each chain)
     for(unsigned int p = 0; p < particleSystem.size(); p++){
@@ -114,8 +102,5 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::exit() {
-	kinect.setCameraTiltAngle(0); // zero the tilt on exit
-	kinect.close();
 
-    g_object_unref(st_skel);
 }
