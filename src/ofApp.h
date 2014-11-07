@@ -2,15 +2,19 @@
 
 // OpenFrameworks includes
 #include "ofMain.h"
-//#include "ofxOpenCV.h"
+#include "ofxOpenCv.h"
 #include "ofxKinect.h"
 
-// OpenNI includes
-//#include <OpenNI.h>
+// SkelTrack includes
+#include <gfreenect.h>
+#include <skeltrack.h>
 
 // local includes
 #include "particleChain.h"
-#include "keycode.h"
+#include "ofxkeycode.h"
+#include "ofxSkeleton.h"
+
+void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data);
 
 class ofApp : public ofBaseApp{
 
@@ -34,5 +38,18 @@ class ofApp : public ofBaseApp{
         ofxKinect kinect;
         int angle;
 
+        int threshMin, threshMax;
+
         std::vector<ParticleChain> particleSystem;
+
+        // intermediary image for reading out depth data
+        ofxCvGrayscaleImage conv_image;
+        ofxCvGrayscaleImage min_image;
+        ofxCvGrayscaleImage max_image;
+        ofxCvShortImage simg;
+
+        SkeltrackSkeleton *st_skel;
+        ofxSkeleton skeleton;
+
+        ofxSkeleton_CBArgs cb_args;
 };

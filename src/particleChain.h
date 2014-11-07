@@ -1,3 +1,5 @@
+#ifndef _PARTICLE_CHAIN_H_
+#define _PARTICLE_CHAIN_H_
 
 #include "ofMain.h"
 #include "particle.h"
@@ -18,3 +20,5 @@ private:
 	std::list<Particle> particles;
 
 };
+
+#endif

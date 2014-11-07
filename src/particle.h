@@ -1,3 +1,5 @@
+#ifndef _PARTICLE_H_
+#define _PARTICLE_H_
 
 #include "ofMain.h"
 
@@ -17,3 +19,5 @@ private:
 	double currentSize;
 	double currentAlpha;
 };
+
+#endif
