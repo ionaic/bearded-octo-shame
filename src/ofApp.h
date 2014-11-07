@@ -3,16 +3,11 @@
 // OpenFrameworks includes
 #include "ofMain.h"
 #include "ofxOpenCv.h"
-#include "ofxKinect.h"
-
-// SkelTrack includes
-#include <gfreenect.h>
-#include <skeltrack.h>
+#include "ofxKinectCommonBridge.h"
 
 // local includes
 #include "particleChain.h"
 #include "ofxkeycode.h"
-#include "ofxSkeleton.h"
 
 void on_track_joints(GObject *obj, GAsyncResult *res, gpointer user_data);
 
@@ -35,7 +30,7 @@ class ofApp : public ofBaseApp{
 		void exit();
 
     private:
-        ofxKinect kinect;
+        ofxKinectCommonBridge kinect;
         int angle;
 
         int threshMin, threshMax;

@@ -1,3 +1,4 @@
 ofxAssimpModelLoader
 ofxKinect
 ofxOpenCv
+ofxKinectCommonBridge

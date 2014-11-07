@@ -4,32 +4,8 @@
 void ofApp::setup(){
     //ofSetLogLevel(OF_LOG_VERBOSE);
 
-    threshMin = 70;
-    threshMax = 230;
-
-    // Skeltrack Skeleton
-    st_skel = skeltrack_skeleton_new();
-
-    // enable depth->video image calibration
-    kinect.setRegistration(true);
-
-    // init(true) shows infrared instead of RGB, init(false,false) disables
-    // video image (faster fps)
-    kinect.init(); 
-
-    kinect.open(); // opens first available kinect
-
-    // print the intrinsic IR sensor values
-	if(kinect.isConnected()) {
-		ofLogNotice() << "sensor-emitter dist: " 
-            << kinect.getSensorEmitterDistance() << "cm";
-		ofLogNotice() << "sensor-camera dist:  " 
-            << kinect.getSensorCameraDistance() << "cm";
-		ofLogNotice() << "zero plane pixel size: " 
-            << kinect.getZeroPlanePixelSize() << "mm";
-		ofLogNotice() << "zero plane dist: " 
-            << kinect.getZeroPlaneDistance() << "mm";
-	}
+    // start the kinect library
+    kinect.start();
 
     conv_image.allocate(kinect.width / 2, kinect.height / 2);
     min_image.allocate(kinect.width / 2, kinect.height / 2);
@@ -48,30 +24,11 @@ void ofApp::setup(){
 void ofApp::update(){
     kinect.update();
 
-    if (kinect.isFrameNew()) {
-        ofxCvGrayscaleImage tmp;
-        tmp.allocate(kinect.width, kinect.height);
-        tmp.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
-        std::cout << "width: " << kinect.width << "; height: " << kinect.height << std::endl;
-        tmp.resize(kinect.width / 2, kinect.height / 2);
-        min_image = tmp;
-        max_image = tmp;
-        min_image.threshold(threshMin);
-        max_image.threshold(threshMax, true);
-        cvAnd(min_image.getCvImage(), max_image.getCvImage(), conv_image.getCvImage(), NULL);
-
-        simg.setFromPixels(conv_image.getPixels(), conv_image.getWidth(), conv_image.getHeight());
-        std::cout << "width: " << conv_image.getWidth() << "; height: " << conv_image.getHeight() << std::endl;
-
-
-        std::cout << "sending out asynch track call" << std::endl;
-        skeltrack_skeleton_track_joints(st_skel,
-                simg.getShortPixelsRef().getPixels(),
-                simg.getWidth(), simg.getHeight(), NULL,
-                on_track_joints, &cb_args);
+    if (kinect.isNewSkeleton()) {
+        for (int i = 0; i < kinec.getSkeletons().size(); ++i) {
+            // do things with the skeletons
+        }
     }
-
-    skeleton.update();
 
     // Draw all of the particles
     for(unsigned int p = 0; p < particleSystem.size(); p++){
@@ -81,16 +38,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    //kinect.drawDepth(0, 0, kinect.width, kinect.height);
-    //kinect.draw(kinect.width+10, 0, kinect.width, kinect.height);
-    conv_image.draw(0, 0);
-    simg.draw(conv_image.getWidth() + 10, 0);
-    min_image.draw(0, conv_image.getHeight() + 10);
-    max_image.draw(min_image.getWidth() + 10, simg.getHeight() + 10);
-    skeleton.draw();
+    kinect.draw(0, 0);
+    kinect.drawDepth(0, kinect.getHeight());
 
     // Update each particle (within each chain)
-    //std::cout << "Drawing all particles" << std::endl;
     for(unsigned int p = 0; p < particleSystem.size(); p++){
     	particleSystem[p].draw();
     }
@@ -116,9 +67,9 @@ void ofApp::mouseMoved(int x, int y ){
     //    if(particleSystem.size() >= i+1){
     //        particleSystem[i].addParticle(ofVec2f(x+(i*40),y+(i*40)));
     //    }
-    //    
+    //
     //}
-	
+
 }
 
 //--------------------------------------------------------------
@@ -137,7 +88,7 @@ void ofApp::mousePressed(int x, int y, int button){
     //    //std::cout << "color for chain: " << color.x << " " << color.y << " " << color.z << std::endl;
     //    particleSystem.push_back(ParticleChain(color));
     //}
-	
+
 	//std::cout << "Adding partcle chain" << std::endl;
 }
 
